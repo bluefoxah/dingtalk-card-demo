@@ -26,6 +26,13 @@ public class TestController {
         return Response.builder().success(true).build();
     }
 
+    @PostMapping(value = "/createGroupByTemplate", produces = "application/json")
+    public Response createGroupByTemplate(@RequestBody Request request) {
+        log.info("createGroup request: {}", JSON.toJSONString(request));
+        testService.createGroupByTemplate();
+        return Response.builder().success(true).build();
+    }
+
     @PostMapping(value = "/createCard", produces = "application/json")
     public Response createCard(@RequestBody Request request) {
         log.info("createCard request: {}", JSON.toJSONString(request));

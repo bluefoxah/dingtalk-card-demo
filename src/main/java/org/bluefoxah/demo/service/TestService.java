@@ -59,7 +59,19 @@ public class TestService {
         log.info("create group success, groupName:{}, groupOwner:{}, openConvId:{}", groupName, groupOwner, openConvId);
         return openConversationId;
     }
+    public String createGroupByTemplate() {
+        String groupName = "测试群组";
+        String groupOwner = owner;
+        List<String> groupMembers = members;
 
+        String openConversationId = groupManager.createGroupByTemplate(groupName, groupOwner, groupMembers);
+        if (StringUtils.isEmpty(openConversationId)) {
+            log.warn("create group by template fail, groupName:{}, groupOwner:{}", groupName, groupOwner);
+        }
+        openConvId = openConversationId;
+        log.info("create group by template success, groupName:{}, groupOwner:{}, openConvId:{}", groupName, groupOwner, openConvId);
+        return openConversationId;
+    }
 
     public String createCard() {
         String cardCreator = owner;

@@ -19,8 +19,13 @@ card.templateid=
 
 ## 测试方法
 ### 1 新建群
+#### 1.1 普通建群
 ```shell
 curl -H "Content-Type: application/json" -X POST http://127.0.0.1:8080/test/createGroup -d '{}'
+```
+#### 1.2 通过群模板创建群
+```shell
+curl -H "Content-Type: application/json" -X POST http://127.0.0.1:8080/test/createGroupByTemplate -d '{}'
 ```
 ### 2 往新建群里添加机器人
 ### 3 创建卡片
