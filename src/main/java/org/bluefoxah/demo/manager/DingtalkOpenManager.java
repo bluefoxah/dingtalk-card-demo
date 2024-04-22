@@ -1,5 +1,7 @@
 package org.bluefoxah.demo.manager;
 
+import java.util.Objects;
+
 import com.aliyun.dingtalkoauth2_1_0.Client;
 import com.aliyun.dingtalkoauth2_1_0.models.GetAccessTokenRequest;
 import com.aliyun.dingtalkoauth2_1_0.models.GetAccessTokenResponse;
@@ -10,8 +12,6 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 @Component
 @Slf4j
@@ -34,11 +34,11 @@ public class DingtalkOpenManager {
     private void getCorpToken() {
         client = createClient();
         if (Objects.isNull(client)) {
-            return ;
+            return;
         }
         GetAccessTokenRequest getAccessTokenRequest = new GetAccessTokenRequest()
-                .setAppKey(appKey)
-                .setAppSecret(appSecret);
+            .setAppKey(appKey)
+            .setAppSecret(appSecret);
         try {
             GetAccessTokenResponse resp = client.getAccessToken(getAccessTokenRequest);
             if (resp.getStatusCode().equals(200)) {
@@ -58,13 +58,13 @@ public class DingtalkOpenManager {
 
     }
 
-    private Client createClient()  {
+    private Client createClient() {
         try {
             Config config = new Config();
             config.protocol = "https";
             config.regionId = "central";
             return new Client(config);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.warn("DingtalkOpenManager#createClient() get exception", e);
         }
         return null;

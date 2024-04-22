@@ -1,5 +1,10 @@
 package org.bluefoxah.demo.manager;
 
+import java.util.List;
+import java.util.UUID;
+
+import com.alibaba.fastjson.JSON;
+
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiChatCreateRequest;
@@ -7,15 +12,10 @@ import com.dingtalk.api.request.OapiImChatScenegroupCreateRequest;
 import com.dingtalk.api.response.OapiChatCreateResponse;
 import com.dingtalk.api.response.OapiImChatScenegroupCreateResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.List;
-import java.util.UUID;
-
-import com.alibaba.fastjson.JSON;
 
 @Component
 @Slf4j
@@ -52,9 +52,11 @@ public class GroupManager {
 
     public String createGroupByTemplate(String groupName, String groupOwner, List<String> groupMembers) {
         try {
-            DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/im/chat/scenegroup/create");
+            DingTalkClient client = new DefaultDingTalkClient(
+                "https://oapi.dingtalk.com/topapi/im/chat/scenegroup/create");
 
-            log.info("createTemplateGroup params, groupName:{}, groupOwner:{}, groupMembers:{}", groupName, groupOwner, JSON.toJSONString(groupMembers));
+            log.info("createTemplateGroup params, groupName:{}, groupOwner:{}, groupMembers:{}", groupName, groupOwner,
+                JSON.toJSONString(groupMembers));
             OapiImChatScenegroupCreateRequest req = new OapiImChatScenegroupCreateRequest();
             req.setTitle(groupName);
             req.setTemplateId(gropuTemplateId);
@@ -81,8 +83,9 @@ public class GroupManager {
             log.info("createTemplateGroup rsp:{}", JSON.toJSONString(rsp));
             if (rsp.isSuccess()) {
                 return rsp.getResult().getOpenConversationId();
-            }else {
-                log.error("createTemplateGroup error, headers:{}, headers:{}", JSON.toJSON(req.getHeaderMap()), JSON.toJSON(rsp.getHeaderContent()));
+            } else {
+                log.error("createTemplateGroup error, headers:{}, headers:{}", JSON.toJSON(req.getHeaderMap()),
+                    JSON.toJSON(rsp.getHeaderContent()));
             }
         } catch (Exception e) {
             log.error("createTemplateGroup error", e);

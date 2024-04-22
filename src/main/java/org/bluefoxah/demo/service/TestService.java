@@ -1,9 +1,14 @@
 package org.bluefoxah.demo.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson2.JSON;
+
 import lombok.extern.slf4j.Slf4j;
 import org.bluefoxah.demo.manager.CardManager;
 import org.bluefoxah.demo.manager.GroupManager;
@@ -12,39 +17,25 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 @Component
 @Slf4j
 public class TestService {
 
+    private final String outTrackIdPrefix = "MyOutTrackId-";
     @Value("${group.owner}")
     private String owner;
-
     @Value("#{'${group.members}'.split(',')}")
     private List<String> members;
-
     @Value("${group.robotcode}")
     private String robotCode;
-
     @Value("${card.templateid}")
     private String templateId;
-
     @Autowired
     private GroupManager groupManager;
-
     @Autowired
     private CardManager cardManager;
-
     private String openConvId = "";
-
     private String curentOutTrackId = UUID.randomUUID().toString();
-
-    private final String outTrackIdPrefix = "MyOutTrackId-";
-
 
     public String createGroup() {
         String groupName = "测试群组";
@@ -59,6 +50,7 @@ public class TestService {
         log.info("create group success, groupName:{}, groupOwner:{}, openConvId:{}", groupName, groupOwner, openConvId);
         return openConversationId;
     }
+
     public String createGroupByTemplate() {
         String groupName = "测试群组";
         String groupOwner = owner;
@@ -69,7 +61,8 @@ public class TestService {
             log.warn("create group by template fail, groupName:{}, groupOwner:{}", groupName, groupOwner);
         }
         openConvId = openConversationId;
-        log.info("create group by template success, groupName:{}, groupOwner:{}, openConvId:{}", groupName, groupOwner, openConvId);
+        log.info("create group by template success, groupName:{}, groupOwner:{}, openConvId:{}", groupName, groupOwner,
+            openConvId);
         return openConversationId;
     }
 
